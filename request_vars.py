@@ -140,3 +140,16 @@ class RequestVars:
 
     oTaskComments = []
     oTaskFiles = []
+
+    lAllTasks = []
+
+    sToggleFilesListType = ""
+    sToggleTaskTab = ""
+    
+    sSelectProjectMode = ""
+
+class SessionVars:
+    sSelectProject = ""
+    sSelectGroup = ""
+    sSelectTask = ""
+    sSelectFile = ""

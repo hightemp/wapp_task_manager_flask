@@ -1,0 +1,36 @@
+{% import "macros.html" as macros %}
+{% include "b_header.html" %}
+
+<form action="">
+
+{{macros.form_hidden_fields(oR.oArgs)}}
+
+<div class="wrapper-projects">
+    {{ macros.menu() }}
+    {{ macros.list_panel(oR.oProjects, oR.aProjectsButtons, oR.sSelectProject, "project", oR.sSearchProject) }}
+    {{ macros.project_menu(oR.sSelectProjectMode) }}
+    {% if oR.sSelectProjectMode == "boards" %}
+        {% include 'projects/boards.html' %}
+    {% elif oR.sSelectProjectMode == "kanban" %}
+        {% include 'projects/kanban.html' %}
+    {% elif oR.sSelectProjectMode == "list" %}
+        {% include 'projects/list.html' %}
+    {% elif oR.sSelectProjectMode == "problems" %}
+        {% include 'projects/problems.html' %}
+    {% elif oR.sSelectProjectMode == "metrics" %}
+        {% include 'projects/metrics.html' %}
+    {% elif oR.sSelectProjectMode == "compare_list" %}
+        {% include 'projects/compare_list.html' %}
+    {% elif oR.sSelectProjectMode == "files" %}
+        {% include 'projects/files.html' %}
+    {% elif oR.sSelectProjectMode == "notes" %}
+        {% include 'projects/notes.html' %}
+    {% elif oR.sSelectProjectMode == "dictionary" %}
+        {% include 'projects/dictionary.html' %}
+    {% elif oR.sSelectProjectMode == "links_database" %}
+        {% include 'projects/links_database.html' %}
+    {% endif %}
+</div>
+
+</form>
+{% include "b_footer.html" %}

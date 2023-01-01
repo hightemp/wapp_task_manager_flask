@@ -1,0 +1,17 @@
+<div class="task-commments">
+    {% for oComment in oR.oTaskComments %}
+
+        <div class="task-comment-wrapper">
+            <a class="task-comment-anchor" href="#task-comment-anchor-{{oComment.id}}" name="task-comment-anchor-{{oComment.id}}">#{{oComment.id}}</a>
+            <div></div>
+            <div class="task-comment">
+                {{oComment.a_html|safe}}
+            </div>
+            <div>
+                <button class="btn btn-danger" title="" type="submit" name="remove-task-comment" value="{{oComment.id}}"><i class="bi bi-files"></i></button>
+                <button class="btn btn-secondary" title="" type="submit" name="edit-task-comment" value="{{oComment.id}}"><i class="bi bi-pencil"></i></button>
+            </div>
+        </div>
+
+    {% endfor %}
+</div>

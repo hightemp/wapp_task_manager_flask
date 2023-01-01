@@ -21,17 +21,37 @@ body, html {
     right: 0px;
     bottom: 0px;
     display: grid;
-    grid-template-columns: 30px 220px 1fr 1fr;
+    grid-template-columns: 30px 220px 30px 1fr;
 }
 
-.wrapper-kanban {
+.wrapper-projects {
     position:absolute;
     top: 0px;
     left: 0px;
     right: 0px;
     bottom: 0px;
     display: grid;
-    grid-template-columns: 30px 220px 1fr 500px;
+    grid-template-columns: 30px 220px 30px 1fr;
+}
+
+.wrapper-all-tasks-list {
+    position:absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    display: grid;
+    grid-template-columns: 30px 1fr 1fr;
+}
+
+.wrapper-list {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+}
+
+.wrapper-kanban {
+    display: grid;
+    grid-template-columns: 1fr 400px;
 }
 
 .wrapper-index {
@@ -44,22 +64,17 @@ body, html {
     grid-template-columns: 30px 1fr;
 }
 
+.wrapper-problems {
+    display: grid;
+    grid-template-columns: 30px 200px 30px 1fr;
+}
+
 .wrapper-files {
-    position:absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
     display: grid;
     grid-template-columns: 30px 1fr;
 }
 
 .wrapper-notes {
-    position:absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
     display: grid;
     grid-template-columns: 30px 1fr;
 }
@@ -168,18 +183,31 @@ body, html {
 }
 
 .groups-view-kanban .group {
-    width: 400px;
-    max-width: 400px;
-    min-width: 400px;
+    width: 300px;
+    max-width: 300px;
+    min-width: 300px;
     height: calc(100vh - 20px);
     padding: 5px;
     background: #eee;
     margin-right: 2px;
 }
 
+.groups-view-kanban .group-name * {
+    font-size: 12px;
+}
+
+.groups-view-kanban .group-name span {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
 .groups-view-kanban .group-name {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 12px;
     display: grid;
     grid-template-columns: 1fr 30px;
     padding: 5px;
@@ -190,7 +218,7 @@ body, html {
 }
 
 .groups-view-kanban .task {
-    padding: 5px;
+    padding: 0px;
     background: rgba(150,150,150,0.1);
     margin-top: 2px;
     margin-bottom: 2px;
@@ -204,10 +232,14 @@ body, html {
     overflow-y: scroll;
 }
 
+.groups-view-kanban .task-name * {
+    font-size: 12px;
+}
+
 .groups-view-kanban .task-name {
     display: grid;
     grid-template-columns: 1fr 30px;
-    font-size: 16px;
+    font-size: 12px;
     padding: 2px;
 }
 
@@ -246,11 +278,20 @@ body, html {
 
 .groups-view-list .group-name {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 12px;
     display: grid;
     grid-template-columns: 30px 1fr;
     padding: 5px;
     gap: 5px;
+}
+
+.groups-view-list .group-name span {
+    display: block;
+    /* justify-content: center; */
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    display: flex;
 }
 
 .groups-view-list .group-name .btn {
@@ -260,7 +301,7 @@ body, html {
 .groups-view-list .task-name {
     display: grid;
     grid-template-columns: 30px 1fr;
-    font-size: 16px;
+    font-size: 12px;
     padding: 5px;
     background: #eee;
     gap: 5px;
@@ -287,6 +328,7 @@ body, html {
     grid-template-rows: auto 1fr 35px 1fr;
     gap: 5px;
     background: #eee;
+    border-left: 1px solid #ddd;
 }
 
 .task-panel .task-name {
@@ -309,6 +351,14 @@ body, html {
     border-bottom: 1px solid #ddd;
 }
 
+.task-panel .buttons-right {
+    justify-content: end;
+}
+.task-panel .task-btn-panel > * {
+    display: flex;
+    flex: 1 50%;
+}
+
 .task-panel .task-commments {
     padding: 5px;
     background: rgba(250,250,250,0.3);
@@ -329,28 +379,86 @@ body, html {
     margin-bottom: 5px;
 }
 
-.task-panel .task-files {
+.task-panel .task-files-list {
     padding: 5px;
     background: rgba(250,250,250,0.3);
     overflow-y: scroll;
     max-height: 45vh;
 }
 
+.task-panel .task-files-grid {
+    padding: 5px;
+    background: rgba(250,250,250,0.3);
+    overflow-y: scroll;
+    max-height: 45vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.task-panel .preview-wrapper {
+    width: 100px;
+    height: 100px;
+}
+
+.task-panel .preview-wrapper img {
+    width: 100%;
+}
+
 .task-panel .task-file-wrapper {
     display: grid;
-    grid-template-columns: 1fr 30px;
+    grid-template-columns: 1fr 70px;
 }
 
 .task-panel .task-file {
     padding: 5px;
     background: rgba(250,250,250,0.7);
     max-height: 100px;
-    overflow-y: auto;
     margin-bottom: 5px;
+}
+
+.task-file-grid-wrapper .task-file-name {
+    text-overflow: ellipsis;
+    max-height: 17px;
+    height: 17px;
+    overflow: hidden;
+    font-size: 10px;
+    width: 100px;
+    white-space: nowrap;
 }
 
 .btn-title {
     border: none;
     background: none;
     text-align: left;
+}
+
+.active-task * {
+}
+
+.active-task,
+.active-task .btn-title,
+.active-task .task-name {
+    background: rgb(116, 84, 242) !important;
+    color: white;
+}
+
+.grid-table {
+    border-bottom: 1px solid #eee;
+    border-right: 1px solid #eee;
+}
+
+.grid-row {
+    display: grid;
+    grid-template-columns: 100px 100px 100px 1fr 45px;
+}
+
+.grid-header-cell {
+    background: #eee;
+    font-weight: bold;
+}
+
+.grid-cell {
+    border-top: 1px solid #eee;
+    border-left: 1px solid #eee;
+    padding: 5px;
 }

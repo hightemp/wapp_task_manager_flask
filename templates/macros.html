@@ -212,7 +212,7 @@
         {% endif %}
     {% endfor %}
 
-    <button type="submit" class="btn btn-success" name="save_{{sName}}" value="1">Сохранить</button>
+    <button type="submit" class="btn btn-success" name="save-{{sName}}" value="1">Сохранить</button>
     <button type="button" class="btn btn-danger" name="cancel" value="1" onclick="history.go(-1)">Отмена</button>
 </div>
 {%- endmacro %}
@@ -225,12 +225,32 @@
 
 {% macro menu() -%}
 <div class="nav-panel">
-    <a href="/" class="btn btn-primary" title="Домашняя"><i class="bi bi-house"></i></a>
-    <a href="/projects/kanban" class="btn btn-primary" title="Проекты - канбан"><i class="bi bi-layout-three-columns"></i></a>
-    <a href="/projects/list" class="btn btn-primary" title="Проекты - списки"><i class="bi bi-layout-text-window-reverse"></i></a>
-    <a href="/metrics" class="btn btn-primary" title="Метрики"><i class="bi bi-graph-up"></i></a>
-    <a href="/files" class="btn btn-primary" title="Файлы"><i class="bi bi-files"></i></a>
-    <a href="/notes" class="btn btn-primary" title="Заметки"><i class="bi bi-journal"></i></a>
-    <a href="/dictionary" class="btn btn-primary" title="Словарь"><i class="bi bi-list-columns-reverse"></i></a>
+    <a href="/" class="btn" title="Домашняя"><i class="bi bi-house"></i></a>
+    <a href="/projects" class="btn" title="Проекты"><i class="bi bi-folder"></i></a>
+    <a href="/all_tasks" class="btn" title="Проекты - списки всех задач"><i class="bi bi-card-list"></i></a>
+    <a href="/files" class="btn" title="Файлы"><i class="bi bi-files"></i></a>
+    <a href="/notes" class="btn" title="Заметки"><i class="bi bi-journal"></i></a>
+    <a href="/dictionary" class="btn" title="Словарь"><i class="bi bi-list-columns-reverse"></i></a>
+    <a href="/links_database" class="btn" title="Словарь"><i class="bi bi-link-45deg"></i></a>
+</div>
+{%- endmacro %}
+
+{% macro btn(sName, sIcon, sCls, sTitle="", sValue="1", sSelValue="") -%}
+<button type="submit" name="{{sName}}" value="{{sValue}}" title="{{sTitle}}" class="btn {{sCls}} {{ 'btn-primary' if sValue|string==sSelValue|string }}" ><i class="bi {{sIcon}}"></i></button>
+{% endmacro %}
+
+{% macro project_menu(sSelectProjectMode) -%}
+<div class="nav-panel">
+    {{ btn("create-note", "bi-plus-square", "btn-success", "Быстро добавить задачу") }}
+    {{ btn("select-project-mode", "bi-houses", "", "Борды", "boards", sSelectProjectMode) }}
+    {{ btn("select-project-mode", "bi-layout-three-columns", "", "Проекты - канбан", "kanban", sSelectProjectMode) }}
+    {{ btn("select-project-mode", "bi-layout-text-window-reverse", "", "Проекты - списки", "list", sSelectProjectMode) }}
+    {{ btn("select-project-mode", "bi-bug-fill", "", "Проблемы", "problems", sSelectProjectMode) }}
+    {{ btn("select-project-mode", "bi-graph-up", "", "Метрики", "metrics", sSelectProjectMode) }}
+    {{ btn("select-project-mode", "bi-list-columns", "", "Списки сравнений", "compare_list", sSelectProjectMode) }}
+    {{ btn("select-project-mode", "bi-files", "", "Файлы", "files", sSelectProjectMode) }}
+    {{ btn("select-project-mode", "bi-journal", "", "Заметки", "notes", sSelectProjectMode) }}
+    {{ btn("select-project-mode", "bi-list-columns-reverse", "", "Словарь", "dictionary", sSelectProjectMode) }}
+    {{ btn("select-project-mode", "bi-link-45deg", "", "База ссылок", "links_database", sSelectProjectMode) }}
 </div>
 {%- endmacro %}

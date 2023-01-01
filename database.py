@@ -59,16 +59,6 @@ class Comment(Model):
         database = db
 lClasses.append(Comment)
 
-class File(Model):
-    name = CharField()
-    sort = IntegerField(default=0)
-    path = CharField()
-    task = ForeignKeyField(Task, backref='tasks')
-
-    class Meta:
-        database = db
-lClasses.append(File)
-
 class Notes(Model):
     name = CharField()
     sort = IntegerField(default=0)
@@ -80,6 +70,18 @@ class Notes(Model):
     class Meta:
         database = db
 lClasses.append(Notes)
+
+class File(Model):
+    name = CharField()
+    sort = IntegerField(default=0)
+    path = CharField(default="")
+    preview_path = CharField(default="")
+    task = ForeignKeyField(Task, backref='tasks', null=True)
+    note = ForeignKeyField(Notes, backref='notes', null=True)
+
+    class Meta:
+        database = db
+lClasses.append(File)
 
 db.connect()
 
@@ -109,6 +111,18 @@ if (bFirstStart):
         for iI in range(0, 20):
             Comment.create(task=task01, a_html="It sounds wonderful, but it's 100 percent accurate! The experiences factor is wireless. Without niches, you will lack experiences. It may seem marvelous, but it's 100% realistic! What does the buzzword 'technologies' really mean? Think granular. Our infinitely reconfigurable feature set is unparalleled, but our sexy raw bandwidth and easy operation is invariably considered a remarkable achievement. What does the term 'structuring'. Clicking on this link which refers to B2B Marketing awards shortlist will take you to the ability to whiteboard without lessening our power to aggregate. What does it really mean to e-enable 'dynamically'? We pride ourselves not only on our robust feature set, but our back-end performance and non-complex configuration is usually considered a terrific achievement. In order to assess the 3rd generation blockchain’s ability to whiteboard without lessening our power to benchmark. It may seem terrific, but it's realistic! Imagine a combination of PGP and XSL. Without efficient, transparent bloatware, you will lack affiliate-based compliance. Without development, you will lack architectures. That is a remarkable achievement taking into account this month's financial state of things! If all of this sounds astonishing to you, that's because it is! A company that can synthesize courageously will (eventually) be able to orchestrate correctly.")
 
+        aFiles = ["static/demo/test_doc.odt", "static/demo/test_image.png", "static/demo/test_pdf.pdf"]
+        for sFilePath in aFiles:
+            with zipfile.ZipFile(os.path.dirname(__file__)) as z:
+                with open(os.path.basename(sFilePath), "wb") as wf:
+                    with z.open(sFilePath, "r") as rf:
+                        wf.write(rf.read())
+
+        for iI in range(0, 10):
+            File.create(task=task01, name=f"test_doc-{iI}.odt"*iI, path=os.path.join(os.path.dirname(__file__), "test_doc.odt"))
+            File.create(task=task01, name=f"test_image-{iI}.png"*iI, path=os.path.join(os.path.dirname(__file__), "test_image.png"))
+            File.create(task=task01, name=f"test_pdf-{iI}.pdf"*iI, path=os.path.join(os.path.dirname(__file__), "test_pdf.pdf"))
+
         task02 = Task.create(name="Проект - доработка", group=group01, a_html=sHTML)
         task03 = Task.create(name="Перенести задачи из старого таск менеджера", group=group01, html=sHTML)
         task04 = Task.create(name="Проект - Задача 04", group=group01, a_html=sHTML)
@@ -124,3 +138,5 @@ if (bFirstStart):
 
         sIndexPage = readfile("templates/README/index.html")
         Notes.create(name="index", a_html=sIndexPage)
+
+        

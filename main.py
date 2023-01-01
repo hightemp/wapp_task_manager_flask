@@ -50,17 +50,26 @@ def fnPrepareArgs(oR):
         sVarName = to_camel_case(sK)
         setattr(oR, sVarName, oR.oArgs[sK])
 
+def fnPrepareFormArgs(oR, sName):
+    oR.oArgs = parse_get(request.args)
+    oR.oArgsLists = parse_multi_form(request.args)
+
+    for sK in oR.oArgs:
+        # sVarName = to_camel_case(sK)
+        sVarName = ""
+        setattr(oR, sVarName, oR.oArgs[sK])
+
 def fnPrepareProjectsData(oR):
     oR.sBaseURL = request.url
 
     fnPrepareArgs(oR)
 
-    oR.oProjects = Project.select().where(Project.name ** f"%{oR.sSearchProject}%")
-    oR.oGroups = Group.select().where(Group.project==oR.sSelectProject)
+    oR.oProjects = Project.select().where(Project.name ** f"%{oR.sSearchProject}%").order_by(-Project.sort)
+    oR.oGroups = Group.select().where(Group.project==oR.sSelectProject).order_by(+Group.sort)
 
     if "select-task" in oR.oArgs:
         oR.oTask = Task.get_by_id(oR.sSelectTask)
-        oR.oTaskComments = Comment.select().where(Comment.task==oR.sSelectTask)
+        oR.oTaskComments = Comment.select().where(Comment.task==oR.sSelectTask).order_by(-Comment.id)
         oR.oTaskFiles = File.select().where(File.task==oR.sSelectTask)
     if "create-project" in oR.oArgs:
         oR.dProjectFieldsV = fnPrepareFormFields(oR.dProjectFields, Project, 0)
@@ -83,10 +92,14 @@ def fnPrepareProjectsData(oR):
         oR.dTaskFields['group']['sel_value'] = oR.sSelectGroup
         oR.dTaskFieldsV = fnPrepareFormFields(oR.dTaskFields, Task, oR.sEditTask)
 
+    if "save-project" in oR.oArgs:
+        fnPrepareFormArgs()
+        Project.create()
+
     # print(oR.oGroups[0].name)
     oR.lTasks = []
     for oGroup in oR.oGroups:
-        oR.lTasks.append(Task.select().where(Task.group==oGroup.id))
+        oR.lTasks.append(Task.select().where(Task.group==oGroup.id).order_by(-Task.sort))
 
 @app.route("/", methods=['GET', 'POST'])
 @cache.cached()
@@ -97,33 +110,36 @@ def index():
         oIndex=oIndex
     )
 
-@app.route("/projects/kanban", methods=['GET', 'POST'])
+@app.route("/get_file/<id>", methods=['GET', 'POST'])
 @cache.cached()
-def projects_kanban():
+def get_file(sID):
+    oFile = File.get_by_id(sID)
+    oR = Response(readfile(oFile.path), mimetype=mimetypes.guess_type(oFile.path)[0])
+    oR.headers['Cache-Control'] = 'max-age=60480000, stale-if-error=8640000, must-revalidate'
+    return oR
+
+@app.route("/projects", methods=['GET', 'POST'])
+@cache.cached()
+def projects():
     oR = RequestVars()
     fnPrepareProjectsData(oR)
 
     return render_template(
-        'projects_kanban.html', 
-        oR=oR
+        'projects.html', 
+        oR=oR 
     )
 
-@app.route("/projects/list", methods=['GET', 'POST'])
+@app.route("/all_tasks", methods=['GET', 'POST'])
 @cache.cached()
-def projects_list():
+def all_tasks():
     oR = RequestVars()
     fnPrepareProjectsData(oR)
 
-    return render_template(
-        'projects_list.html', 
-        oR=oR
-    )
+    oR.lAllTasks = Task.select()
 
-@app.route("/metrics", methods=['GET', 'POST'])
-@cache.cached()
-def metrics():
     return render_template(
-        'metrics.html', 
+        'project_list_all.html',
+        oR=oR
     )
 
 @app.route("/files", methods=['GET', 'POST'])
@@ -138,6 +154,20 @@ def files():
 def notes():
     return render_template(
         'notes.html', 
+    )
+
+@app.route("/dictionary", methods=['GET', 'POST'])
+@cache.cached()
+def dictionary():
+    return render_template(
+        'dictionary.html', 
+    )
+
+@app.route("/links_database", methods=['GET', 'POST'])
+@cache.cached()
+def links_database():
+    return render_template(
+        'links_database.html', 
     )
 
 def run():

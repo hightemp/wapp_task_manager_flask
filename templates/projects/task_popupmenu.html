@@ -1,0 +1,12 @@
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    </button>
+    <ul class="dropdown-menu">
+        <li><button type="submit" name="select-task" value="{{oTask.id}}" class="dropdown-item" >Выбрать</button></li>
+        <li><button type="submit" name="edit-task" value="{{oTask.id}}" class="dropdown-item" >Редактировать</button></li>
+        <li><button type="submit" name="remove-task" value="{{oTask.id}}" class="dropdown-item" >Удалить</button></li>
+        {% for oMoveGroup in oR.oGroups %}
+        <li><button type="submit" name="move-task" value="{{oMoveGroup.id}}" class="dropdown-item" >Перенести в {{oMoveGroup.name}}</button></li>
+        {% endfor %}
+    </ul>
+</div>

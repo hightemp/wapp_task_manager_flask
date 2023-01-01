@@ -1,11 +1,5 @@
-{% import "macros.html" as macros %}
-{% include "b_header.html" %}
-
-<form action="">
 
 <div class="wrapper-kanban">
-    {{ macros.menu() }}
-    {{ macros.list_panel(oR.oProjects, oR.aProjectsButtons, oR.sSelectProject, "project", oR.sSearchProject) }}
     {% if oR.sCreateGroup or oR.sEditGroup %}
         <div class="edit-panel">
             <h4>Группа</h4>
@@ -38,21 +32,10 @@
             </div>
             <div class="group-task-wrapper">
                 {% for oTask in oR.lTasks[loop.index0] %}
-                <div class="task" id="task-{{oTask.id}}">
+                <div class="task {{ 'active-task' if oTask.id|string==oR.sSelectTask|string }}" id="task-{{oTask.id}}">
                     <div class="task-name">
                         <button type="submit" name="select-task" value="{{oTask.id}}" class="btn-title" >{{oTask.name}}</button>
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><button type="submit" name="select-task" value="{{oTask.id}}" class="dropdown-item" href="#">Выбрать</button></li>
-                                <li><button type="submit" name="edit-task" value="{{oTask.id}}" class="dropdown-item" href="#">Редактировать</button></li>
-                                <li><button type="submit" name="remove-task" value="{{oTask.id}}" class="dropdown-item" href="#">Удалить</button></li>
-                                {% for oMoveGroup in oR.oGroups %}
-                                <li><button type="submit" name="move-task" value="{{oMoveGroup.id}}" class="dropdown-item" href="#">Перенести в {{oMoveGroup.name}}</button></li>
-                                {% endfor %}
-                            </ul>
-                        </div>
+                        {% include "projects/task_popupmenu.html" %}
                     </div>
                     <!-- <div class="task-html">{{oTask.a_html|safe}}</div> -->
                 </div>
@@ -63,8 +46,5 @@
     </div>
     {% endif %}
 
-    {% include 'task_panel.html' %}
+    {% include 'projects/task_panel.html' %}
 </div>
-
-</form>
-{% include "b_footer.html" %}

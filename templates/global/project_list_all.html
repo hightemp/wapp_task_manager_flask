@@ -1,0 +1,36 @@
+{% import "macros.html" as macros %}
+{% include "b_header.html" %}
+
+<form action="">
+
+{{macros.form_hidden_fields(oR.oArgs)}}
+
+<div class="wrapper-all-tasks-list">
+    {{ macros.menu() }}
+    <div class="all-tasks-list">
+        <div class="grid-table">
+            <div class="grid-row">
+                <div class="grid-cell grid-header-cell">Проект</div>
+                <div class="grid-cell grid-header-cell">Группа</div>
+                <div class="grid-cell grid-header-cell">Создан</div>
+                <div class="grid-cell grid-header-cell">Заголовок</div>
+                <div class="grid-cell grid-header-cell"></div>
+            </div>
+            {% for oTask in oR.lAllTasks %}
+                <div class="grid-row {{ 'active-task' if oTask.id|string==oR.sSelectTask|string }}" id="task-{{oTask.id}}">
+                    <div class="grid-cell">{{oTask.group.project.name}}</div>
+                    <div class="grid-cell">{{oTask.group.name}}</div>
+                    <div class="grid-cell">{{oTask.created_at}}</div>
+                    <div class="grid-cell"><button type="submit" name="select-task" value="{{oTask.id}}" class="btn-title" >{{oTask.name}}</button></div>
+                    <div class="grid-cell">
+                        {% include "projects/task_popupmenu.html" %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% include 'task_panel.html' %}
+</div>
+
+</form>
+{% include "b_footer.html" %}

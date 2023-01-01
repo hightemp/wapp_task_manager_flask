@@ -1,0 +1,31 @@
+{% if oR.sToggleFilesListType == "grid" %}
+<!-- грид файлов -->
+<div class="task-files-grid">
+    {% for oFile in oR.oTaskFiles %}
+    <div class="task-file-grid-wrapper">
+        <div class="task-file">
+            <div class="task-file-name">{% if oFile.name %}{{oFile.name|safe}}{% else %}[БЕЗ ИМЕНИ]{% endif %}</div>
+            <div class="preview-wrapper">
+                <img class="preview" src="/zip/static/demo/test_image.png{{oFile.preview_path}}" loading="lazy">
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<!-- список файлов -->
+<div class="task-files-list">
+    {% for oFile in oR.oTaskFiles %}
+    <div class="task-file-wrapper">
+        <div class="task-file">
+            <div class="task-file-name">{% if oFile.name %}{{oFile.name|safe}}{% else %}[БЕЗ ИМЕНИ]{% endif %}</div>
+            <!--div class="task-file-path">{{oFile.path|safe}}</div-->
+        </div>
+        <div>
+            <button class="btn btn-danger" title="" type="submit" name="remove-task-file" value="{{oFile.id}}"><i class="bi bi-files"></i></button>
+            <button class="btn btn-secondary" title="" type="submit" name="edit-task-file" value="{{oFile.id}}"><i class="bi bi-pencil"></i></button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
