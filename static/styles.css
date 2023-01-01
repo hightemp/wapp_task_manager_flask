@@ -265,3 +265,8 @@ body, html {
 .groups-view-list .task-name .btn {
     opacity: 0.5;
 }
+
+.edit-panel {
+    padding: 5px;
+    border-right: 1px solid #eee;
+}

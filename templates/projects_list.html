@@ -6,10 +6,13 @@
 <div class="wrapper">
     {{ macros.menu() }}
     {{ macros.list_panel(oR.oProjects, oR.aProjectsButtons, oR.sSelectProject, "project", oR.sProjectFilter) }}
+    {{ macros.list_panel(oR.oProjects, oR.aProjectsButtons, oR.sSelectProject, "project", oR.sProjectFilter) }}
     {% if oR.sEditGroup %}
-        group
+        <div class="edit-panel">{{ macros.form_text_fields(oR.dGroupFields, "group") }}</div>
     {% elif oR.sEditTask %}
-        task
+        <div class="edit-panel">{{ macros.form_text_fields(oR.dTaskFields, "task") }}</div>
+    {% elif oR.sProjectTask %}
+        <div class="edit-panel">{{ macros.form_text_fields(oR.dProjectFields, "project") }}</div>
     {% elif oR.sSelectProject %}
     <div class="groups-panel groups-view-list">
 
