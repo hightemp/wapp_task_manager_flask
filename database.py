@@ -9,13 +9,12 @@ DATABASE = './wapp_task_manager_flask.database.db'
 
 __DEMO__ = True
 
-if (__DEMO__):
-    os.unlink(DATABASE)
+# if (__DEMO__):
+#     os.unlink(DATABASE)
 
 bFirstStart = not os.path.exists(DATABASE)
 db = SqliteDatabase(DATABASE)
-
-db.connect()
+lClasses = []
 
 # NOTE: Модели
 class Project(Model):
@@ -24,6 +23,7 @@ class Project(Model):
 
     class Meta:
         database = db
+lClasses.append(Project)
 
 class Group(Model):
     name = CharField()
@@ -33,6 +33,7 @@ class Group(Model):
 
     class Meta:
         database = db
+lClasses.append(Group)
 
 class Task(Model):
     name = CharField()
@@ -45,14 +46,28 @@ class Task(Model):
 
     class Meta:
         database = db
+lClasses.append(Task)
+
+class Comment(Model):
+    task = ForeignKeyField(Task, backref='tasks')
+    a_html = TextField(null=True)
+    a_markdown = TextField(null=True)
+    created_at = DateField(default=datetime.datetime.now)
+    updated_at = DateField(default=datetime.datetime.now)
+
+    class Meta:
+        database = db
+lClasses.append(Comment)
 
 class File(Model):
     name = CharField()
     sort = IntegerField(default=0)
     path = CharField()
+    task = ForeignKeyField(Task, backref='tasks')
 
     class Meta:
         database = db
+lClasses.append(File)
 
 class Notes(Model):
     name = CharField()
@@ -64,11 +79,14 @@ class Notes(Model):
 
     class Meta:
         database = db
+lClasses.append(Notes)
+
+db.connect()
 
 # NOTE: DEMO
 if (bFirstStart):
     print("[!] FIRST START")
-    db.create_tables([Project, Group, Task, File, Notes])
+    db.create_tables(lClasses)
 
     if (__DEMO__):
         sHTML = """
@@ -87,6 +105,10 @@ if (bFirstStart):
         group03 = Group.create(name="done", color="#d3d3d3", project=project01)
 
         task01 = Task.create(name="Проект - дизайн", group=group01, a_html=sHTML)
+        
+        for iI in range(0, 20):
+            Comment.create(task=task01, a_html="It sounds wonderful, but it's 100 percent accurate! The experiences factor is wireless. Without niches, you will lack experiences. It may seem marvelous, but it's 100% realistic! What does the buzzword 'technologies' really mean? Think granular. Our infinitely reconfigurable feature set is unparalleled, but our sexy raw bandwidth and easy operation is invariably considered a remarkable achievement. What does the term 'structuring'. Clicking on this link which refers to B2B Marketing awards shortlist will take you to the ability to whiteboard without lessening our power to aggregate. What does it really mean to e-enable 'dynamically'? We pride ourselves not only on our robust feature set, but our back-end performance and non-complex configuration is usually considered a terrific achievement. In order to assess the 3rd generation blockchain’s ability to whiteboard without lessening our power to benchmark. It may seem terrific, but it's realistic! Imagine a combination of PGP and XSL. Without efficient, transparent bloatware, you will lack affiliate-based compliance. Without development, you will lack architectures. That is a remarkable achievement taking into account this month's financial state of things! If all of this sounds astonishing to you, that's because it is! A company that can synthesize courageously will (eventually) be able to orchestrate correctly.")
+
         task02 = Task.create(name="Проект - доработка", group=group01, a_html=sHTML)
         task03 = Task.create(name="Перенести задачи из старого таск менеджера", group=group01, html=sHTML)
         task04 = Task.create(name="Проект - Задача 04", group=group01, a_html=sHTML)

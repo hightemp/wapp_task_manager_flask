@@ -4,6 +4,7 @@ from peewee import *
 from playhouse.shortcuts import model_to_dict
 import os
 import zipfile
+from database import *
 
 __DEBUG__ = False
 
@@ -93,7 +94,10 @@ def parse_multi_form(form):
     return data
 
 def fnPrepareFormFields(aFields, cCls, sSelID):
-    kls = globals()[cCls]
+    if isinstance(cCls, str):
+        kls = globals()[cCls]
+    else:
+        kls = cCls
     oItem = {}
     if sSelID != "" and int(sSelID) > 0:
         try:

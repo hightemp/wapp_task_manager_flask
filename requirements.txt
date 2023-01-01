@@ -1,2 +1,4 @@
 Flask==2.0.1
 Jinja2==3.0.1
+peewee==3.15.4
+flask_caching==2.0.1

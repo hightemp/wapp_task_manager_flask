@@ -270,3 +270,70 @@ body, html {
     padding: 5px;
     border-right: 1px solid #eee;
 }
+
+.task-panel {
+    display: grid;
+    grid-template-rows: auto 1fr 35px 1fr;
+    gap: 5px;
+    background: #eee;
+}
+
+.task-panel .task-name {
+    font-size: 20px;
+    padding: 5px;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+}
+
+.task-panel .task-desc {
+    padding: 5px;
+    background: rgba(250,250,250,0.3);
+    overflow-y: scroll;
+    border-bottom: 1px solid #ddd;
+    max-height: 45vh;
+}
+
+.task-panel .task-btn-panel {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+}
+
+.task-panel .task-commments {
+    padding: 5px;
+    background: rgba(250,250,250,0.3);
+    overflow-y: scroll;
+    max-height: 45vh;
+}
+
+.task-panel .task-comment-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 30px;
+}
+
+.task-panel .task-comment {
+    padding: 5px;
+    background: rgba(250,250,250,0.7);
+    max-height: 100px;
+    overflow-y: auto;
+    margin-bottom: 5px;
+}
+
+.task-panel .task-files {
+    padding: 5px;
+    background: rgba(250,250,250,0.3);
+    overflow-y: scroll;
+    max-height: 45vh;
+}
+
+.task-panel .task-file-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 30px;
+}
+
+.task-panel .task-file {
+    padding: 5px;
+    background: rgba(250,250,250,0.7);
+    max-height: 100px;
+    overflow-y: auto;
+    margin-bottom: 5px;
+}

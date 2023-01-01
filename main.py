@@ -57,6 +57,32 @@ def fnPrepareProjectsData(oR):
 
     oR.oProjects = Project.select()
     oR.oGroups = Group.select().where(Group.project==oR.sSelectProject)
+
+    if "select-task" in oR.oArgs:
+        oR.oTask = Task.get_by_id(oR.sSelectTask)
+        oR.oTaskComments = Comment.select().where(Comment.task==oR.sSelectTask)
+        oR.oTaskFiles = File.select().where(File.task==oR.sSelectTask)
+    if "create-project" in oR.oArgs:
+        oR.dProjectFieldsV = fnPrepareFormFields(oR.dProjectFields, Project, 0)
+    if "edit-project" in oR.oArgs:
+        oR.dProjectFieldsV = fnPrepareFormFields(oR.dProjectFields, Project, oR.sEditProject)
+    if "create-group" in oR.oArgs:
+        oR.dGroupFields['project']['list'] = oR.oProjects
+        oR.dGroupFields['project']['sel_value'] = oR.sSelectProject
+        oR.dGroupFieldsV = fnPrepareFormFields(oR.dGroupFields, Group, 0)
+    if "edit-group" in oR.oArgs:
+        oR.dGroupFields['project']['list'] = oR.oProjects
+        oR.dGroupFields['project']['sel_value'] = oR.sSelectProject
+        oR.dGroupFieldsV = fnPrepareFormFields(oR.dGroupFields, Group, oR.sEditGroup)
+    if "create-task" in oR.oArgs:
+        oR.dTaskFields['group']['list'] = Group.select()
+        oR.dTaskFields['group']['sel_value'] = oR.sSelectGroup
+        oR.dTaskFieldsV = fnPrepareFormFields(oR.dTaskFields, Task, 0)
+    if "edit-task" in oR.oArgs:
+        oR.dTaskFields['group']['list'] = Group.select()
+        oR.dTaskFields['group']['sel_value'] = oR.sSelectGroup
+        oR.dTaskFieldsV = fnPrepareFormFields(oR.dTaskFields, Task, oR.sEditTask)
+
     # print(oR.oGroups[0].name)
     oR.lTasks = []
     for oGroup in oR.oGroups:
