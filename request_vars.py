@@ -123,6 +123,8 @@ class RequestVars:
 
     sBaseURL = ""
 
+    sSearchProject = ""
+
     sSelectProject = ""
     sSelectGroup = ""
     sSelectTask = ""

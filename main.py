@@ -55,7 +55,7 @@ def fnPrepareProjectsData(oR):
 
     fnPrepareArgs(oR)
 
-    oR.oProjects = Project.select()
+    oR.oProjects = Project.select().where(Project.name ** f"%{oR.sSearchProject}%")
     oR.oGroups = Group.select().where(Group.project==oR.sSelectProject)
 
     if "select-task" in oR.oArgs:
@@ -67,11 +67,11 @@ def fnPrepareProjectsData(oR):
     if "edit-project" in oR.oArgs:
         oR.dProjectFieldsV = fnPrepareFormFields(oR.dProjectFields, Project, oR.sEditProject)
     if "create-group" in oR.oArgs:
-        oR.dGroupFields['project']['list'] = oR.oProjects
+        oR.dGroupFields['project']['list'] = Project.select()
         oR.dGroupFields['project']['sel_value'] = oR.sSelectProject
         oR.dGroupFieldsV = fnPrepareFormFields(oR.dGroupFields, Group, 0)
     if "edit-group" in oR.oArgs:
-        oR.dGroupFields['project']['list'] = oR.oProjects
+        oR.dGroupFields['project']['list'] = Project.select()
         oR.dGroupFields['project']['sel_value'] = oR.sSelectProject
         oR.dGroupFieldsV = fnPrepareFormFields(oR.dGroupFields, Group, oR.sEditGroup)
     if "create-task" in oR.oArgs:
