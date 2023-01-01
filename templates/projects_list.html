@@ -1,0 +1,17 @@
+{% import "macros.html" as macros %}
+{% include "b_header.html" %}
+
+<form action="">
+
+<div class="wrapper">
+    {{ macros.menu() }}
+    {{ macros.list_panel(oProjects, aProjectsButtons, sSelProject, "project", sProjectFilter) }}
+    {% if sSelProject %}
+    <div class="groups-panel groups-view-list">
+
+    </div>
+    {% endif %}
+</div>
+
+</form>
+{% include "b_footer.html" %}

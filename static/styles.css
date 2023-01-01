@@ -1,0 +1,202 @@
+:root {
+    --icon-size: 20px;
+    font-size: 12px;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden;
+}
+
+* {
+    border-radius: 0px !important;
+}
+
+.wrapper {
+    position:absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    display: grid;
+    grid-template-columns: 30px 300px 1fr;
+}
+
+.wrapper-index {
+    position:absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    display: grid;
+    grid-template-columns: 30px 1fr;
+}
+
+.wrapper-index .index-view {
+    column-count: 3;
+    padding: 5px;
+}
+
+.nav-panel {
+    border-right: 1px solid rgba(0,0,0,0.4);
+}
+
+.nav-panel > * {
+    width: 100%;
+}
+
+.panel-project {
+    border-right: 1px solid #eee;
+}
+
+.panel-group {
+    border-right: 1px solid #eee;
+}
+
+.panel-group .left-panel-list {
+    /* border-top: 1px solid #eee; */
+}
+
+.panel-tree-category {
+    border-right: 1px solid #eee;
+}
+
+.panel-tree-category .left-panel-list {
+    /* border-top: 1px solid #eee; */
+}
+
+.panel-account {
+    border-right: 1px solid #eee;
+}
+
+.item-row {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+}
+
+.tree-item-row {
+    display: grid;
+    grid-template-columns: 30px 30px 1fr;
+}
+
+.tree-icon * {
+    border: none;
+    background: none;
+}
+
+.tree-icon button {
+    display: contents;
+}
+
+.tree-spacer {
+    display: inline-block;
+    width: 10px;
+}
+
+.message-box-wrapper {
+    position:absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+.message-box {
+    width: 400px;
+}
+
+.form-text-fields-account {
+    padding: 10px;
+}
+
+.row-with-button {
+    display: grid;
+    grid-template-columns: 1fr 30px;
+}
+
+.list-group-item {
+    min-height: 32px;
+    display: grid;
+    grid-template-columns: 1fr 30px;
+}
+
+.active .bg-primary {
+    background: rgba(255, 255, 255, 0.3) !important;
+}
+
+.groups-panel {
+    overflow-x: scroll;
+    display: flex;
+    width: 5000px;
+}
+
+.group {
+    width: 400px;
+    max-width: 400px;
+    height: calc(100vh - 20px);
+    padding: 5px;
+    background: #eee;
+    margin-right: 2px;
+}
+
+.group-name {
+    font-weight: bold;
+    font-size: 20px;
+    display: grid;
+    grid-template-columns: 1fr 30px;
+    padding: 5px;
+}
+
+.group-name .btn {
+    opacity: 0.5;
+}
+
+.task {
+    padding: 5px;
+    background: rgba(150,150,150,0.1);
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.task-html {
+    padding: 5px;
+    background: rgba(255,255,255,1);
+    min-height: 50px;
+    max-height: 200px;
+    overflow-y: scroll;
+}
+
+.task-name {
+    display: grid;
+    grid-template-columns: 1fr 30px;
+    font-size: 16px;
+    padding: 2px;
+}
+
+.task-name span:first-child {
+    display: flex;
+    align-items: center;
+    text-align: left;
+    height: 100%;
+}
+
+.task-name .btn {
+    opacity: 0.5;
+}
+
+
+.group-task-wrapper {
+    height: calc(100vh - 60px);
+    overflow-y: scroll;
+}
+
+.index-view {
+    overflow-y: scroll;
+}

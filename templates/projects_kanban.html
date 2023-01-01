@@ -1,0 +1,45 @@
+{% import "macros.html" as macros %}
+{% include "b_header.html" %}
+
+<form action="">
+
+<div class="wrapper">
+    {{ macros.menu() }}
+    {{ macros.list_panel(oProjects, aProjectsButtons, sSelProject, "project", sProjectFilter) }}
+    {% if sSelProject %}
+    <div class="groups-panel groups-view-kanban">
+        {% for oGroup in oGroups %}
+        <div class="group" id="group-{{oGroup.id}}">
+            <div class="group-name" style="background:{{oGroup.color}}">
+                <span>{{oGroup.name}}</span>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-success"><i class="bi bi-plus-square"></i></button>
+                </div>
+            </div>
+            <div class="group-task-wrapper">
+                {% for oTask in lTasks[loop.index0] %}
+                <div class="task" id="task-{{oTask.id}}">
+                    <div class="task-name">
+                        <span>{{oTask.name}}</span>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Редактировать</a></li>
+                                <li><a class="dropdown-item" href="#">Удалить</a></li>
+                                <li><a class="dropdown-item" href="#">Перенести в</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="task-html">{{oTask.a_html|safe}}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+</form>
+{% include "b_footer.html" %}

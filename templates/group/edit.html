@@ -1,0 +1,15 @@
+{% import "macros.html" as macros %}
+{% include "b_header.html" %}
+
+<div class="message-box-wrapper">
+<div class="message-box">
+<form action="">
+
+{{ macros.form_hidden_fields(oArgs) }}
+{{ macros.form_text_fields(dFormsFieldsList, "group") }}
+
+</form>
+</div>
+</div>
+
+{% include "b_footer.html" %}

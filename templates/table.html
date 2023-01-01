@@ -1,0 +1,39 @@
+{% import "macros.html" as macros %}
+{% include "b_header.html" %}
+
+<div class="table-wrapper">
+    <div class="nav-panel">
+        <a href="/" class="btn btn-primary"><i class="bi bi-house"></i></a>
+        <a href="/as_table" class="btn btn-primary"><i class="bi bi-table"></i></a>
+    </div>
+    <div class="grid-table-wrapper">
+        <div class="grid-table">
+            <div class="grid-table-row">
+                <div class="grid-table-cell header-cell">Группа</div>
+                <div class="grid-table-cell header-cell">Категория</div>
+                <div class="grid-table-cell header-cell">Название аккаунта</div>
+                <div class="grid-table-cell header-cell">Логин</div>
+                <div class="grid-table-cell header-cell">Пароль</div>
+                <div class="grid-table-cell header-cell"></div>
+            </div>
+            {% for oAccount in oAccounts %}
+            <div class="grid-table-row">
+                <div class="grid-table-cell">{{oAccount.category.group.name}}</div>
+                <div class="grid-table-cell">{{oAccount.category.name}}</div>
+                <div class="grid-table-cell">{{oAccount.name}}</div>
+                <div class="grid-table-cell">{{oAccount.a_username|string}}</div>
+                <div class="grid-table-cell">{{oAccount.a_password|string}}</div>    
+                <div class="grid-table-cell">
+                    <form action="/">
+                        <input type="hidden" name="select-account" value="{{oAccount.id}}">
+                        <button class="btn btn-secondary" title="" type="submit" name="edit_account" value="1"><i class="bi bi-pencil"></i></button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{% include "b_footer.html" %}

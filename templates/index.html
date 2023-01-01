@@ -1,0 +1,14 @@
+{% import "macros.html" as macros %}
+{% include "b_header.html" %}
+
+<form action="">
+
+<div class="wrapper-index">
+    {{ macros.menu() }}
+    <div class="index-view">
+        {{oIndex.a_html|safe}}
+    </div>
+</div>
+
+</form>
+{% include "b_footer.html" %}

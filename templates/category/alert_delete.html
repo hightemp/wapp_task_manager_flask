@@ -1,0 +1,19 @@
+{% import "macros.html" as macros %}
+{% include "b_header.html" %}
+
+<div class="message-box-wrapper">
+<div class="message-box">
+<form action="">
+    {{ macros.form_hidden_fields(aFields)}}
+
+    <div>Удалить категорию?</div>
+    <div>
+        <button type="submit" class="btn btn-success" name="accept_remove_category" value="1">Удалить</button>
+        <button type="submit" class="btn btn-success" name="cancel" value="1">Отмена</button>
+    </div>
+
+</form>
+</div>
+</div>
+
+{% include "b_footer.html" %}
