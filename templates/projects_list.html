@@ -33,8 +33,8 @@
                     <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     </button>
                     <ul class="dropdown-menu">
-                        <li><button type="submit" name="edit-group" value="{{oGroup.id}}" class="dropdown-item" href="#">Редактировать</button></li>
-                        <li><button type="submit" name="remove-group" value="{{oGroup.id}}" class="dropdown-item" href="#">Удалить</button></li>
+                        <li><button type="submit" name="edit-group" value="{{oGroup.id}}" class="dropdown-item" >Редактировать</button></li>
+                        <li><button type="submit" name="remove-group" value="{{oGroup.id}}" class="dropdown-item" >Удалить</button></li>
                     </ul>
                 </div>
                 <span>{{oGroup.name}}</span>
@@ -47,17 +47,17 @@
                             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             </button>
                             <ul class="dropdown-menu">
-                                <li><button type="submit" name="select-task" value="{{oTask.id}}" class="dropdown-item" href="#">Выбрать</button></li>
-                                <li><button type="submit" name="edit-task" value="{{oTask.id}}" class="dropdown-item" href="#">Редактировать</button></li>
-                                <li><button type="submit" name="remove-task" value="{{oTask.id}}" class="dropdown-item" href="#">Удалить</button></li>
+                                <li><button type="submit" name="select-task" value="{{oTask.id}}" class="dropdown-item" >Выбрать</button></li>
+                                <li><button type="submit" name="edit-task" value="{{oTask.id}}" class="dropdown-item" >Редактировать</button></li>
+                                <li><button type="submit" name="remove-task" value="{{oTask.id}}" class="dropdown-item" >Удалить</button></li>
                                 {% for oMoveGroup in oR.oGroups %}
-                                <li><button type="submit" name="move-task" value="{{oMoveGroup.id}}" class="dropdown-item" href="#">Перенести в {{oMoveGroup.name}}</button></li>
+                                <li><button type="submit" name="move-task" value="{{oMoveGroup.id}}" class="dropdown-item" >Перенести в {{oMoveGroup.name}}</button></li>
                                 {% endfor %}
                             </ul>
                         </div>
-                        <span>{{oTask.name}}</span>
+                        <button type="submit" name="select-task" value="{{oTask.id}}" class="btn-title" >{{oTask.name}}</button>
                     </div>
-                    <div class="task-html">{{oTask.a_html|safe}}</div>
+                    <!-- <div class="task-html">{{oTask.a_html|safe}}</div> -->
                 </div>
                 {% endfor %}
             </div>

@@ -21,7 +21,17 @@ body, html {
     right: 0px;
     bottom: 0px;
     display: grid;
-    grid-template-columns: 30px 300px 1fr 1fr;
+    grid-template-columns: 30px 220px 1fr 1fr;
+}
+
+.wrapper-kanban {
+    position:absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    display: grid;
+    grid-template-columns: 30px 220px 1fr 500px;
 }
 
 .wrapper-index {
@@ -154,12 +164,13 @@ body, html {
 .groups-view-kanban.groups-panel {
     overflow-x: scroll;
     display: flex;
-    width: 5000px;
+    flex-wrap: nowrap;
 }
 
 .groups-view-kanban .group {
     width: 400px;
     max-width: 400px;
+    min-width: 400px;
     height: calc(100vh - 20px);
     padding: 5px;
     background: #eee;
@@ -313,7 +324,7 @@ body, html {
 .task-panel .task-comment {
     padding: 5px;
     background: rgba(250,250,250,0.7);
-    max-height: 100px;
+    /* max-height: 100px; */
     overflow-y: auto;
     margin-bottom: 5px;
 }
@@ -336,4 +347,10 @@ body, html {
     max-height: 100px;
     overflow-y: auto;
     margin-bottom: 5px;
+}
+
+.btn-title {
+    border: none;
+    background: none;
+    text-align: left;
 }

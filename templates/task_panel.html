@@ -9,8 +9,9 @@
         {% if oR.sToggleTaskTab == "comments" %}
         <div class="task-commments">
             {% for oComment in oR.oTaskComments %}
-            <a class="task-comment-anchor" href="#task-comment-anchor-{{oComment.id}}" name="task-comment-anchor-{{oComment.id}}"></a>
             <div class="task-comment-wrapper">
+                <a class="task-comment-anchor" href="#task-comment-anchor-{{oComment.id}}" name="task-comment-anchor-{{oComment.id}}">#{{oComment.id}}</a>
+                <div></div>
                 <div class="task-comment">
                     {{oComment.a_html|safe}}
                 </div>
