@@ -131,13 +131,13 @@ body, html {
     background: rgba(255, 255, 255, 0.3) !important;
 }
 
-.groups-panel {
+.groups-view-kanban.groups-panel {
     overflow-x: scroll;
     display: flex;
     width: 5000px;
 }
 
-.group {
+.groups-view-kanban .group {
     width: 400px;
     max-width: 400px;
     height: calc(100vh - 20px);
@@ -146,7 +146,7 @@ body, html {
     margin-right: 2px;
 }
 
-.group-name {
+.groups-view-kanban .group-name {
     font-weight: bold;
     font-size: 20px;
     display: grid;
@@ -154,18 +154,18 @@ body, html {
     padding: 5px;
 }
 
-.group-name .btn {
+.groups-view-kanban .group-name .btn {
     opacity: 0.5;
 }
 
-.task {
+.groups-view-kanban .task {
     padding: 5px;
     background: rgba(150,150,150,0.1);
     margin-top: 2px;
     margin-bottom: 2px;
 }
 
-.task-html {
+.groups-view-kanban .task-html {
     padding: 5px;
     background: rgba(255,255,255,1);
     min-height: 50px;
@@ -173,30 +173,75 @@ body, html {
     overflow-y: scroll;
 }
 
-.task-name {
+.groups-view-kanban .task-name {
     display: grid;
     grid-template-columns: 1fr 30px;
     font-size: 16px;
     padding: 2px;
 }
 
-.task-name span:first-child {
+.groups-view-kanban .task-name span:first-child {
     display: flex;
     align-items: center;
     text-align: left;
     height: 100%;
 }
 
-.task-name .btn {
+.groups-view-kanban .task-name .btn {
     opacity: 0.5;
 }
 
 
-.group-task-wrapper {
+.groups-view-kanban .group-task-wrapper {
     height: calc(100vh - 60px);
     overflow-y: scroll;
 }
 
 .index-view {
     overflow-y: scroll;
+}
+
+.groups-view-list.groups-panel {
+    overflow-y: scroll;
+}
+
+.groups-view-list .group {
+    margin-bottom: 20px;
+}
+
+.groups-view-list .group:last-child {
+    margin-bottom: 200px;
+}
+
+.groups-view-list .group-name {
+    font-weight: bold;
+    font-size: 20px;
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    padding: 5px;
+    gap: 5px;
+}
+
+.groups-view-list .group-name .btn {
+    opacity: 0.5;
+}
+
+.groups-view-list .task-name {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    font-size: 16px;
+    padding: 5px;
+    background: #eee;
+    gap: 5px;
+}
+
+.groups-view-list .task-name span:first-child {
+    display: flex;
+    align-items: center;
+    text-align: left;
+    height: 100%;
+}
+
+.groups-view-list .task-name .btn {
+    opacity: 0.5;
 }
