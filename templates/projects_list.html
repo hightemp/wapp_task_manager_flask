@@ -5,29 +5,40 @@
 
 <div class="wrapper">
     {{ macros.menu() }}
-    {{ macros.list_panel(oProjects, aProjectsButtons, sSelProject, "project", sProjectFilter) }}
-    {% if sSelProject %}
+    {{ macros.list_panel(oR.oProjects, oR.aProjectsButtons, oR.sSelectProject, "project", oR.sProjectFilter) }}
+    {% if oR.sEditGroup %}
+        group
+    {% elif oR.sEditTask %}
+        task
+    {% elif oR.sSelectProject %}
     <div class="groups-panel groups-view-list">
 
-        {% for oGroup in oGroups %}
+        {% for oGroup in oR.oGroups %}
         <div class="group" id="group-{{oGroup.id}}">
             <div class="group-name" style="background:{{oGroup.color}}">
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-success"><i class="bi bi-plus-square"></i></button>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Редактировать</a></li>
+                        <li><a class="dropdown-item" href="#">Удалить</a></li>
+                    </ul>
                 </div>
                 <span>{{oGroup.name}}</span>
             </div>
             <div class="group-task-wrapper">
-                {% for oTask in lTasks[loop.index0] %}
+                {% for oTask in oR.lTasks[loop.index0] %}
                 <div class="task" id="task-{{oTask.id}}">
                     <div class="task-name">
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Редактировать</a></li>
-                                <li><a class="dropdown-item" href="#">Удалить</a></li>
-                                <li><a class="dropdown-item" href="#">Перенести в</a></li>
+                                <li><button type="submit" name="edit-group" value="{{oTask.id}}" class="dropdown-item" href="#">Редактировать</button></li>
+                                <li><button type="submit" name="remove-group" value="{{oTask.id}}" class="dropdown-item" href="#">Удалить</button></li>
+                                {% for oMoveGroup in oR.oGroups %}
+                                <li><button type="submit" name="move-group" value="{{oMoveGroup.id}}" class="dropdown-item" href="#">Перенести в {{oMoveGroup.name}}</button></li>
+                                {% endfor %}
                             </ul>
                         </div>
                         <span>{{oTask.name}}</span>

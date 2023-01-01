@@ -21,10 +21,30 @@ body, html {
     right: 0px;
     bottom: 0px;
     display: grid;
-    grid-template-columns: 30px 300px 1fr;
+    grid-template-columns: 30px 300px 1fr 1fr;
 }
 
 .wrapper-index {
+    position:absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    display: grid;
+    grid-template-columns: 30px 1fr;
+}
+
+.wrapper-files {
+    position:absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    display: grid;
+    grid-template-columns: 30px 1fr;
+}
+
+.wrapper-notes {
     position:absolute;
     top: 0px;
     left: 0px;

@@ -250,109 +250,125 @@ def parse_multi_form(form):
         
 #         return aNewCategories
 
-dProjectFields = {
-    'id': {
-        'name': 'id',
-        'type': 'hidden',
-        'field_name': 'id',
-        'value': '',
-    },
-    'name': {
-        'name': 'Название',
-        'type': 'text',
-        'field_name': 'name',
-        'value': '',
-    },
-    'sort': {
-        'name': 'Сорт',
-        'type': 'text',
-        'field_name': 'sort',
-        'value': '',
-    },
-}
+class RequestVars:
+    dProjectFields = {
+        'id': {
+            'name': 'id',
+            'type': 'hidden',
+            'field_name': 'id',
+            'value': '',
+        },
+        'name': {
+            'name': 'Название',
+            'type': 'text',
+            'field_name': 'name',
+            'value': '',
+        },
+        'sort': {
+            'name': 'Сорт',
+            'type': 'text',
+            'field_name': 'sort',
+            'value': '',
+        },
+    }
 
-dGroupFields = {
-    'id': {
-        'name': 'id',
-        'type': 'hidden',
-        'field_name': 'id',
-        'value': '',
-    },
-    'name': {
-        'name': 'Название',
-        'type': 'text',
-        'field_name': 'name',
-        'value': '',
-    },
-    'sort': {
-        'name': 'Сорт',
-        'type': 'text',
-        'field_name': 'sort',
-        'value': '',
-    },
-    'project': {
-        'name': 'Проект',
-        'type': 'select',
-        'field_name': 'project',
-        'list': [],
-        'value': '',
-    },
-}
+    dGroupFields = {
+        'id': {
+            'name': 'id',
+            'type': 'hidden',
+            'field_name': 'id',
+            'value': '',
+        },
+        'name': {
+            'name': 'Название',
+            'type': 'text',
+            'field_name': 'name',
+            'value': '',
+        },
+        'sort': {
+            'name': 'Сорт',
+            'type': 'text',
+            'field_name': 'sort',
+            'value': '',
+        },
+        'project': {
+            'name': 'Проект',
+            'type': 'select',
+            'field_name': 'project',
+            'list': [],
+            'value': '',
+        },
+    }
 
-dTaskFields = {
-    'name': {
-        'name': 'Название',
-        'type': 'text',
-        'field_name': 'name',
-        'value': '',
-    },
-    'sort': {
-        'name': 'Сорт',
-        'type': 'text',
-        'field_name': 'sort',
-        'value': '',
-    },
-    'a_html': {
-        'name': 'Описание HTML',
-        'type': 'textarea',
-        'field_name': 'a_html',
-        'value': '',
-    },
-    'a_markdown': {
-        'name': 'Описание Markdown',
-        'type': 'textarea',
-        'field_name': 'a_markdown',
-        'value': '',
-    },
-}
+    dTaskFields = {
+        'name': {
+            'name': 'Название',
+            'type': 'text',
+            'field_name': 'name',
+            'value': '',
+        },
+        'sort': {
+            'name': 'Сорт',
+            'type': 'text',
+            'field_name': 'sort',
+            'value': '',
+        },
+        'a_html': {
+            'name': 'Описание HTML',
+            'type': 'textarea',
+            'field_name': 'a_html',
+            'value': '',
+        },
+        'a_markdown': {
+            'name': 'Описание Markdown',
+            'type': 'textarea',
+            'field_name': 'a_markdown',
+            'value': '',
+        },
+    }
 
-dClasses = {
-    'group': 'Group',
-    'category': 'Category',
-    'account': 'Account',
-}
+    dClasses = {
+        'group': 'Group',
+        'category': 'Category',
+        'account': 'Account',
+    }
 
-aProjectsButtons = [
-    {"name":"reload", "cls":"bi-arrow-repeat", "btn_cls": "btn-primary"},
-    {"name":"create_project", "cls":"bi-file-plus", "btn_cls": "btn-success"},
-    {"name":"edit_project", "cls":"bi-pencil", "btn_cls": "btn-secondary"},
-    {"name":"remove_project", "cls":"bi-trash", "btn_cls": "btn-danger"},
-]
+    aProjectsButtons = [
+        {"name":"reload", "cls":"bi-arrow-repeat", "btn_cls": "btn-primary"},
+        {"name":"create_project", "cls":"bi-file-plus", "btn_cls": "btn-success"},
+        {"name":"edit_project", "cls":"bi-pencil", "btn_cls": "btn-secondary"},
+        {"name":"remove_project", "cls":"bi-trash", "btn_cls": "btn-danger"},
+    ]
 
-sGroupFilter = ''
-sCategoryFilter = ''
-sAccountFilter = ''
+    aArgsAssoc = {
+        "select-project": "sSelectProject",
+        "select-group": "sSelGroup",
+        "select-task": "sSelTask",
+        "edit-group": "sEditGroup",
+        "edit-group": "sEditGroup",
+    }
 
-oProjects={}
-oGroups={}
-lTasks = []
+    sGroupFilter = ''
+    sCategoryFilter = ''
+    sAccountFilter = ''
 
-sBaseURL = ""
+    oProjects={}
+    oGroups={}
+    lTasks = []
 
-sSelProject = ""
-sSelGroup = ""
-sSelTask = ""
-sSelFile = ""
+    oProject={}
+    oGroup={}
+    oTask={}
+
+    sBaseURL = ""
+
+    sSelectProject = ""
+    sSelectGroup = ""
+    sSelectTask = ""
+    sSelectFile = ""
+
+    sEditGroup = ""
+    sEditTask = ""
 
 def fnPrepareFormFields(aFields, cCls, sSelID):
     kls = globals()[cCls]
@@ -383,38 +399,29 @@ def zip_static(path):
     oR.headers['Cache-Control'] = 'max-age=60480000, stale-if-error=8640000, must-revalidate'
     return oR
 
-# @cache.cached()
-def fnPrepareProjectsData():
-    sBaseURL = request.url
+def to_camel_case(snake_str):
+    components = snake_str.split('-')
+    return 's'+''.join(x.title() for x in components[0:])
 
-    oArgs = parse_get(request.args)
-    oArgsLists = parse_multi_form(request.args)
+def fnPrepareArgs(oR):
+    oR.oArgs = parse_get(request.args)
+    oR.oArgsLists = parse_multi_form(request.args)
 
-    sSelProject = globals()['sSelProject']
-    sSelGroup = globals()['sSelGroup']
-    sSelTask = globals()['sSelTask']
+    for sK in oR.oArgs:
+        sVarName = to_camel_case(sK)
+        setattr(oR, sVarName, oR.oArgs[sK])
 
-    if 'select-project' in oArgs:
-        sSelProject=oArgs['select-project']
-    if 'select-group' in oArgs:
-        sSelGroup=oArgs['select-group']
-    if 'select-task' in oArgs:
-        sSelTask=oArgs['select-task']
-    
-    oProjects = Project.select()
-    oGroups = Group.select().where(Group.project==sSelProject)
-    lTasks = []
-    for oGroup in oGroups:
-        lTasks.append(Task.select().where(Task.group==oGroup.id))
-    
-    globals()['oArgs'] = oArgs
-    globals()['oArgsLists'] = oArgsLists
-    globals()['oProjects'] = oProjects
-    globals()['oGroups'] = oGroups
-    globals()['lTasks'] = lTasks
-    globals()['sSelProject'] = sSelProject
-    globals()['sSelGroup'] = sSelGroup
-    globals()['sSelTask'] = sSelTask
+def fnPrepareProjectsData(oR):
+    oR.sBaseURL = request.url
+
+    fnPrepareArgs(oR)
+
+    oR.oProjects = Project.select()
+    oR.oGroups = Group.select().where(Group.project==oR.sSelectProject)
+    # print(oR.oGroups[0].name)
+    oR.lTasks = []
+    for oGroup in oR.oGroups:
+        oR.lTasks.append(Task.select().where(Task.group==oGroup.id))
 
 @app.route("/", methods=['GET', 'POST'])
 @cache.cached()
@@ -428,28 +435,23 @@ def index():
 @app.route("/projects/kanban", methods=['GET', 'POST'])
 @cache.cached()
 def projects_kanban():
-    fnPrepareProjectsData()
-
-    print(globals()['oProjects'])
+    oR = RequestVars()
+    fnPrepareProjectsData(oR)
 
     return render_template(
         'projects_kanban.html', 
-        sBaseURL=globals()['sBaseURL'],
+        oR=oR
+    )
 
-        sSelProject=globals()['sSelProject'],
-        sSelGroup=globals()['sSelGroup'],
-        sSelTask=globals()['sSelTask'],
+@app.route("/projects/list", methods=['GET', 'POST'])
+@cache.cached()
+def projects_list():
+    oR = RequestVars()
+    fnPrepareProjectsData(oR)
 
-        oProjects=globals()['oProjects'],
-        oGroups=globals()['oGroups'],
-
-        lTasks=globals()['lTasks'],
-
-        aProjectsButtons=aProjectsButtons,
-
-        sGroupFilter=globals()['sGroupFilter'],
-        sCategoryFilter=globals()['sCategoryFilter'],
-        sAccountFilter=globals()['sAccountFilter']
+    return render_template(
+        'projects_list.html', 
+        oR=oR
     )
 
 @app.route("/metrics", methods=['GET', 'POST'])
@@ -459,29 +461,18 @@ def metrics():
         'metrics.html', 
     )
 
-@app.route("/projects/list", methods=['GET', 'POST'])
+@app.route("/files", methods=['GET', 'POST'])
 @cache.cached()
-def projects_list():
-    fnPrepareProjectsData()
-
+def files():
     return render_template(
-        'projects_list.html', 
-        sBaseURL=globals()['sBaseURL'],
+        'files.html', 
+    )
 
-        sSelProject=globals()['sSelProject'],
-        sSelGroup=globals()['sSelGroup'],
-        sSelTask=globals()['sSelTask'],
-
-        oProjects=globals()['oProjects'],
-        oGroups=globals()['oGroups'],
-
-        lTasks=globals()['lTasks'],
-
-        aProjectsButtons=aProjectsButtons,
-
-        sGroupFilter=globals()['sGroupFilter'],
-        sCategoryFilter=globals()['sCategoryFilter'],
-        sAccountFilter=globals()['sAccountFilter']
+@app.route("/notes", methods=['GET', 'POST'])
+@cache.cached()
+def notes():
+    return render_template(
+        'notes.html', 
     )
 
 def run():
