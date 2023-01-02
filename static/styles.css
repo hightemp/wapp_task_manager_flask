@@ -257,7 +257,7 @@ body, html {
 
 .groups-view-kanban .group-task-wrapper {
     height: calc(100vh - 60px);
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .index-view {

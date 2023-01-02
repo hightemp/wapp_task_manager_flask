@@ -71,6 +71,7 @@ def fnPrepareProjectsData(oR):
         oR.oTask = Task.get_by_id(oR.sSelectTask)
         oR.oTaskComments = Comment.select().where(Comment.task==oR.sSelectTask).order_by(-Comment.id)
         oR.oTaskFiles = File.select().where(File.task==oR.sSelectTask)
+        print(oR.oTaskComments)
     if "create-project" in oR.oArgs:
         oR.dProjectFieldsV = fnPrepareFormFields(oR.dProjectFields, Project, 0)
     if "edit-project" in oR.oArgs:
