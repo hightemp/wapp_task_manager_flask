@@ -38,40 +38,19 @@ def zip_static(path):
     oR.headers['Cache-Control'] = 'max-age=60480000, stale-if-error=8640000, must-revalidate'
     return oR
 
-def to_camel_case(snake_str):
-    components = snake_str.split('-')
-    return 's'+''.join(x.title() for x in components[0:])
-
-def fnPrepareArgs(oR):
-    oR.oArgs = parse_get(request.args)
-    oR.oArgsLists = parse_multi_form(request.args)
-
-    for sK in oR.oArgs:
-        sVarName = to_camel_case(sK)
-        setattr(oR, sVarName, oR.oArgs[sK])
-
-def fnPrepareFormArgs(oR, sName):
-    oR.oArgs = parse_get(request.args)
-    oR.oArgsLists = parse_multi_form(request.args)
-
-    for sK in oR.oArgs:
-        # sVarName = to_camel_case(sK)
-        sVarName = ""
-        setattr(oR, sVarName, oR.oArgs[sK])
-
 def fnPrepareProjectsData(oR):
+    oMW = ModelsWrapper(oR)
     oR.sBaseURL = request.url
 
     fnPrepareArgs(oR)
 
-    oR.oProjects = Project.select().where(Project.name ** f"%{oR.sSearchProject}%").order_by(-Project.sort)
-    oR.oGroups = Group.select().where(Group.project==oR.sSelectProject).order_by(+Group.sort)
+    oR.oProjects = oMW.fnGetAllProjects()
+    oR.oGroups = oMW.fnGetAllGroups()
 
     if "select-task" in oR.oArgs:
-        oR.oTask = Task.get_by_id(oR.sSelectTask)
-        oR.oTaskComments = Comment.select().where(Comment.task==oR.sSelectTask).order_by(-Comment.id)
+        oR.oTask = oMW.fnGetTask()
+        oR.oTaskComments = oMW.fnGetAllComments()
         oR.oTaskFiles = File.select().where(File.task==oR.sSelectTask)
-        print(oR.oTaskComments)
     if "create-project" in oR.oArgs:
         oR.dProjectFieldsV = fnPrepareFormFields(oR.dProjectFields, Project, 0)
     if "edit-project" in oR.oArgs:
@@ -105,9 +84,15 @@ def fnPrepareProjectsData(oR):
 @app.route("/", methods=['GET', 'POST'])
 @cache.cached()
 def index():
-    oIndex = Notes.get(Notes.name=='index')
+    oR = RequestVars()
+    fnPrepareProjectsData(oR)
+    try:
+        oIndex = Notes.get(Notes.name=='index')
+    except:
+        oIndex = None
     return render_template(
-        'index.html', 
+        'index.html',
+        oR=oR,
         oIndex=oIndex
     )
 
@@ -115,9 +100,9 @@ def index():
 @cache.cached()
 def get_file(sID):
     oFile = File.get_by_id(sID)
-    oR = Response(readfile(oFile.path), mimetype=mimetypes.guess_type(oFile.path)[0])
-    oR.headers['Cache-Control'] = 'max-age=60480000, stale-if-error=8640000, must-revalidate'
-    return oR
+    oResp = Response(readfile(oFile.path), mimetype=mimetypes.guess_type(oFile.path)[0])
+    oResp.headers['Cache-Control'] = 'max-age=60480000, stale-if-error=8640000, must-revalidate'
+    return oResp
 
 @app.route("/projects", methods=['GET', 'POST'])
 @cache.cached()
@@ -169,6 +154,45 @@ def dictionary():
 def links_database():
     return render_template(
         'links_database.html', 
+    )
+
+# NOTE: DEMO
+@app.route("/demo/", methods=['GET', 'POST'])
+@cache.cached()
+def demo_index():
+    oR = RequestVars()
+    fnPrepareProjectsData(oR)
+    try:
+        oIndex = Notes.get(Notes.name=='index')
+    except:
+        oIndex = None
+
+    return render_template(
+        'demo/index.html', 
+        oR=oR,
+        oIndex=oIndex
+    )
+
+@app.route("/demo/tasks/", methods=['GET', 'POST'])
+@cache.cached()
+def demo_tasks_index():
+    oR = RequestVars()
+    fnPrepareProjectsData(oR)
+
+    return render_template(
+        'demo/tasks/index.html', 
+        oR=oR
+    )
+
+@app.route("/demo/files/", methods=['GET', 'POST'])
+@cache.cached()
+def demo_files_index():
+    oR = RequestVars()
+    fnPrepareProjectsData(oR)
+
+    return render_template(
+        'demo/files/index.html', 
+        oR=oR
     )
 
 def run():

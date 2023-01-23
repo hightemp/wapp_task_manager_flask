@@ -1,6 +1,16 @@
+import pydotenv
 
+env = pydotenv.Environment()
+
+__DEBUG__ = env.get('__DEBUG__', False)
+STATIC_PATH = "/static"
+
+if (__DEBUG__):
+    STATIC_PATH = "/zip/static"
 
 class RequestVars:
+    sStaticPath = STATIC_PATH
+
     dProjectFields = {
         'id': {
             'name': 'id',
@@ -147,6 +157,9 @@ class RequestVars:
     sToggleTaskTab = ""
     
     sSelectProjectMode = ""
+
+    sCreateTaskComment = ""
+    sCreateTaskFile = ""
 
 class SessionVars:
     sSelectProject = ""

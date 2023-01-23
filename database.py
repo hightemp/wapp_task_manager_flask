@@ -139,4 +139,20 @@ if (bFirstStart):
         sIndexPage = readfile("templates/README/index.html")
         Notes.create(name="index", a_html=sIndexPage)
 
-        
+class ModelsWrapper():
+    oR = {}
+
+    def __init__(self, oR) -> None:
+        self.oR = oR
+
+    def fnGetAllComments(self):
+        Comment.select().where(Comment.task==self.oR.sSelectTask).order_by(-Comment.id)
+
+    def fnGetTask(self):
+        return Task.get_by_id(self.oR.sSelectTask)
+    
+    def fnGetAllProjects(self):
+        return Project.select().where(Project.name ** f"%{self.oR.sSearchProject}%").order_by(-Project.sort)
+    
+    def fnGetAllGroups(self):
+        return Group.select().where(Group.project==self.oR.sSelectProject).order_by(+Group.sort)

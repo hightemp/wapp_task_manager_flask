@@ -6,7 +6,10 @@
 <div class="wrapper-index">
     {{ macros.menu() }}
     <div class="index-view">
+        {% if oIndex: %}
         {{oIndex.a_html|safe}}
+        {% else: %}
+        {% endif %}
     </div>
 </div>
 

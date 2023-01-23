@@ -1,0 +1,13 @@
+{% import "macros.html" as macros %}
+{% include "demo/b_header.html" %}
+
+<div class="row">
+    <div class="col12">
+        {% if oIndex: %}
+        {{oIndex.a_html|safe}}
+        {% else: %}
+        {% endif %}
+    </div>
+</div>
+
+{% include "demo/b_footer.html" %}

@@ -1,3 +1,4 @@
+from flask import g, Flask, request, send_file, redirect, session, jsonify
 from jinja2 import Template, FunctionLoader, Environment, BaseLoader
 from flask import render_template as render_template_default
 from peewee import *
@@ -5,8 +6,14 @@ from playhouse.shortcuts import model_to_dict
 import os
 import zipfile
 from database import *
+import pydotenv
 
-__DEBUG__ = False
+env = pydotenv.Environment()
+
+print("[!] ENV: ", env.items())
+
+__DEBUG__ = env.get('__DEBUG__', False)
+print("[!] ENV: __DEBUG__ =", __DEBUG__)
 
 def readfile(sFilePath):
     if (__DEBUG__):
@@ -118,3 +125,24 @@ def fnPrepareFormFields(aFields, cCls, sSelID):
                 else:
                     aFields[sK]['value'] = ''
     return aFields
+
+def to_camel_case(snake_str):
+    components = snake_str.split('-')
+    return 's'+''.join(x.title() for x in components[0:])
+
+def fnPrepareArgs(oR):
+    oR.oArgs = parse_get(request.args)
+    oR.oArgsLists = parse_multi_form(request.args)
+
+    for sK in oR.oArgs:
+        sVarName = to_camel_case(sK)
+        setattr(oR, sVarName, oR.oArgs[sK])
+
+def fnPrepareFormArgs(oR, sName):
+    oR.oArgs = parse_get(request.args)
+    oR.oArgsLists = parse_multi_form(request.args)
+
+    for sK in oR.oArgs:
+        # sVarName = to_camel_case(sK)
+        sVarName = ""
+        setattr(oR, sVarName, oR.oArgs[sK])

@@ -5,7 +5,9 @@
         <div class="task-btn-panel">
             <div class="buttons-left">
                 <button class="btn btn-secondary" title="" type="submit" name="toggle-task-tab" value="comments"><i class="bi bi-list-task"></i></button>
-                <button class="btn btn-secondary" title="" type="submit" name="toggle-task-tab" value="files"><i class="bi bi-files"></i></button>    
+                <button class="btn btn-success" title="" type="submit" name="create-task-comment" value="1"><i class="bi bi-plus-square"></i></button>
+                <button class="btn btn-secondary" title="" type="submit" name="toggle-task-tab" value="files"><i class="bi bi-files"></i></button>
+                <button class="btn btn-success" title="" type="submit" name="create-task-file" value="1"><i class="bi bi-file-earmark-plus"></i></button> 
             </div>
             <div class="buttons-right">
                 {% if oR.sToggleTaskTab == "files" %}
